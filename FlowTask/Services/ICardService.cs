@@ -1,0 +1,13 @@
+﻿using FlowTask.Models;
+
+namespace FlowTask.Services
+{
+    public interface ICardService
+    {
+        Task<Card> Get(string id);
+        Task<List<Card>> GetAll();
+        Task<Card> Update(Card card);
+        Task<Card> Delete(Card card);
+        Task<Card> Add(Card card);
+    }
+}

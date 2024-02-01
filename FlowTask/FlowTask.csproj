@@ -25,8 +25,6 @@
     <Folder Include="Configurations\" />
     <Folder Include="Validations\" />
     <Folder Include="ViewModels\" />
-    <Folder Include="Services\" />
-    <Folder Include="Repositories\" />
   </ItemGroup>
 
 </Project>
