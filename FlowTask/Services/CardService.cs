@@ -1,4 +1,6 @@
-﻿using FlowTask.Models;
+﻿using AutoMapper;
+using FlowTask.DTOs;
+using FlowTask.Models;
 using FlowTask.Repositories;
 
 namespace FlowTask.Services
@@ -6,13 +8,17 @@ namespace FlowTask.Services
     public class CardService : ICardService
     {
         private readonly ICardRepository _cardRepository;
-        public CardService(ICardRepository cardRepository)
+        private readonly IMapper _mapper;
+        public CardService(
+            ICardRepository cardRepository,
+            IMapper mapper)
         {
             _cardRepository = cardRepository;
+            _mapper = mapper;
         }
-        public async Task<Card> Add(Card card)
+        public async Task<Card> Add(CreateCardDTO card)
         {
-            return await _cardRepository.Add(card);
+            return await _cardRepository.Add(_mapper.Map<Card>(card));
         }
 
         public async Task<Card> Delete(Card card)
@@ -30,9 +36,9 @@ namespace FlowTask.Services
             return await _cardRepository.GetAll();
         }
 
-        public async Task<Card> Update(Card card)
+        public async Task<Card> Update(UpdateCardDTO card)
         {
-            return await _cardRepository.Update(card);
+            return await _cardRepository.Update(_mapper.Map<Card>(card));
         }
     }
 }

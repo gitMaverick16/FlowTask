@@ -1,4 +1,6 @@
-﻿using FlowTask.Models;
+﻿using AutoMapper;
+using FlowTask.DTOs;
+using FlowTask.Models;
 using FlowTask.Repositories;
 
 namespace FlowTask.Services
@@ -6,9 +8,13 @@ namespace FlowTask.Services
     public class BoardService : IBoardService
     {
         private readonly IBoardRepository _boardRepository;
-        public BoardService(IBoardRepository boardRepository)
+        private readonly IMapper _mapper;
+        public BoardService(
+            IBoardRepository boardRepository,
+            IMapper mapper)
         {
             _boardRepository = boardRepository;
+            _mapper = mapper;
         }
         public async Task<Board> Delete(Board board)
         {
@@ -25,14 +31,14 @@ namespace FlowTask.Services
             return await _boardRepository.GetAll();
         }
 
-        public async Task<Board> Update(Board board)
+        public async Task<Board> Update(UpdateBoardDTO board)
         {
-            return await _boardRepository.Update(board);
+            return await _boardRepository.Update(_mapper.Map<Board>(board));
         }
 
-        public async Task<Board> Add(Board board)
+        public async Task<Board> Add(CreateBoardDTO board)
         {
-            return await _boardRepository.Add(board);
+            return await _boardRepository.Add(_mapper.Map<Board>(board));
         }
     }
 }

@@ -1,5 +1,8 @@
-﻿using FlowTask.Models;
+﻿using FlowTask.DTOs;
+using FlowTask.Models;
 using FlowTask.Services;
+using FlowTask.Validators;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FlowTask.Controllers
@@ -21,14 +24,26 @@ namespace FlowTask.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Board board)
+        public async Task<IActionResult> Post([FromBody] CreateBoardDTO board)
         {
+            var validator = new CreateBoardValidator();
+            var validateResult = validator.Validate(board);
+            if (!validateResult.IsValid)
+            {
+                return BadRequest(validateResult.Errors.ToString());
+            }
             return Ok(await _boardService.Add(board));
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(Board board)
+        public async Task<IActionResult> Put(UpdateBoardDTO board)
         {
+            var validator = new UpdateBoardValidator();
+            var validateResult = validator.Validate(board);
+            if (!validateResult.IsValid)
+            {
+                return BadRequest(validateResult.Errors.ToString());
+            }
             var boardSearched = await _boardService.Get(board.Id.ToString());
             if (boardSearched is null)
             {

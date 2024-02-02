@@ -1,11 +1,7 @@
-﻿using FlowTask.Models;
+﻿using FlowTask.DTOs;
 using FlowTask.Services;
-using Microsoft.AspNetCore.Http;
+using FlowTask.Validators;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FlowTask.Controllers
 {
@@ -26,14 +22,26 @@ namespace FlowTask.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Card card)
+        public async Task<IActionResult> Post([FromBody] CreateCardDTO card)
         {
+            var validator = new CreateCardValidator();
+            var validateResult = validator.Validate(card);
+            if (!validateResult.IsValid)
+            {
+                return BadRequest(validateResult.Errors.ToString());
+            }
             return Ok(await _cardService.Add(card));
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(Card card)
+        public async Task<IActionResult> Put(UpdateCardDTO card)
         {
+            var validator = new UpdateCardValidator();
+            var validateResult = validator.Validate(card);
+            if (!validateResult.IsValid)
+            {
+                return BadRequest(validateResult.Errors.ToString());
+            }
             var cardSearched = await _cardService.Get(card.Id.ToString());
             if (cardSearched is null)
             {

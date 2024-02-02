@@ -1,4 +1,5 @@
-﻿using FlowTask.Models;
+﻿using FlowTask.DTOs;
+using FlowTask.Models;
 
 namespace FlowTask.Services
 {
@@ -6,8 +7,8 @@ namespace FlowTask.Services
     {
         Task<Section> Get(string id);
         Task<List<Section>> GetAll();
-        Task<Section> Update(Section section);
+        Task<Section> Update(UpdateSectionDTO section);
         Task<Section> Delete(Section section);
-        Task<Section> Add(Section section);
+        Task<Section> Add(CreateSectionDTO section);
     }
 }

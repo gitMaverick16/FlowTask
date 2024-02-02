@@ -1,4 +1,5 @@
-﻿using FlowTask.Models;
+﻿using FlowTask.DTOs;
+using FlowTask.Models;
 
 namespace FlowTask.Services
 {
@@ -6,8 +7,8 @@ namespace FlowTask.Services
     {
         Task<Card> Get(string id);
         Task<List<Card>> GetAll();
-        Task<Card> Update(Card card);
+        Task<Card> Update(UpdateCardDTO card);
         Task<Card> Delete(Card card);
-        Task<Card> Add(Card card);
+        Task<Card> Add(CreateCardDTO card);
     }
 }
