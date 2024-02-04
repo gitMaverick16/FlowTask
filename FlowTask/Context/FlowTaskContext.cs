@@ -1,19 +1,20 @@
 ﻿using FlowTask.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace FlowTask.Context
 {
-    public class FlowTaskContext : DbContext
+    public class FlowTaskContext : IdentityDbContext<User>
     {
         public FlowTaskContext(DbContextOptions<FlowTaskContext> options) : base(options)
-        {
-        }
+        {}
         public DbSet<Board> Boards { get; set; }
         public DbSet<Section> Sections { get; set; }
         public DbSet<Card> Cards { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Board>()
                 .HasMany(x => x.Sections)
                 .WithOne(x => x.Board)

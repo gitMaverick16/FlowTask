@@ -15,7 +15,8 @@ namespace FlowTask.Repositories
         }
         public async Task<Board> Get(string id)
         {
-            return await _board.FirstOrDefaultAsync(b => b.Id.Equals(id));
+            var asd = await _board.FirstOrDefaultAsync(b => b.Id.ToString() == id);
+            return asd;
         }
 
         public async Task<List<Board>> GetAll()

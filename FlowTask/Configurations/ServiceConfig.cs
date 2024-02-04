@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using FlowTask.Context;
 using FlowTask.Repositories;
 using FlowTask.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace FlowTask.Configurations
 {
@@ -14,9 +16,15 @@ namespace FlowTask.Configurations
             services.AddScoped<ISectionService, SectionService>();
 
             //Repositories
+            services.AddScoped<IBoardRepository, BoardRepository>();
+            services.AddScoped<ICardRepository, CardRepository>();
             services.AddScoped<ISectionRepository, SectionRepository>();
-            services.AddScoped<ISectionRepository, SectionRepository>();
-            services.AddScoped<ISectionRepository, SectionRepository>();
+
+            //Database
+            services.AddDbContext<FlowTaskContext>(options =>
+            {
+                options.UseSqlServer(configuration.GetConnectionString("FlowTaskConnection"));
+            });
 
         }
     }

@@ -23,6 +23,12 @@ namespace FlowTask.Controllers
             return Ok(await _boardService.Get(id));
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            return Ok(await _boardService.GetAll());
+        }
+
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateBoardDTO board)
         {
